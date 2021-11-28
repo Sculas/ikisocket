@@ -1,29 +1,29 @@
 
 # WebSocket wrapper for [Fiber v2](https://github.com/gofiber/fiber) with events support
-[![Go Report Card](https://goreportcard.com/badge/github.com/antoniodipinto/ikisocket)](https://goreportcard.com/report/github.com/antoniodipinto/ikisocket)
-[![GoDoc](https://godoc.org/github.com/antoniodipinto/ikisocket?status.svg)](https://godoc.org/github.com/antoniodipinto/ikisocket)
-[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/antoniodipinto/ikisocket/blob/master/LICENSE)
+[![Go Report Card](https://goreportcard.com/badge/github.com/sculas/ikisocket)](https://goreportcard.com/report/github.com/sculas/ikisocket)
+[![GoDoc](https://godoc.org/github.com/sculas/ikisocket?status.svg)](https://godoc.org/github.com/sculas/ikisocket)
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/sculas/ikisocket/blob/master/LICENSE)
 ### Based on [Fiber Websocket](https://github.com/gofiber/websocket) and inspired by [Socket.io](https://github.com/socketio/socket.io)
 
-### Upgrade to Fiber v2 details [here](https://github.com/antoniodipinto/ikisocket/issues/6) 
+### Upgrade to Fiber v2 details [here](https://github.com/sculas/ikisocket/issues/6) 
 
 
 ## Any bug?
-Create ad issue following [this](https://github.com/antoniodipinto/ikisocket/blob/master/.github/ISSUE_TEMPLATE/bug_report.md) template
+Create ad issue following [this](https://github.com/sculas/ikisocket/blob/master/.github/ISSUE_TEMPLATE/bug_report.md) template
 
 
 ## Feature request?
-Create ad issue following [this](https://github.com/antoniodipinto/ikisocket/blob/master/.github/ISSUE_TEMPLATE/feature_request.md) template
+Create ad issue following [this](https://github.com/sculas/ikisocket/blob/master/.github/ISSUE_TEMPLATE/feature_request.md) template
 
 
 
 ## ⚙️ Installation
 
 ```
-go get -u github.com/antoniodipinto/ikisocket
+go get -u github.com/sculas/ikisocket
 ```
 
-## 📖 ️ [Documentation](https://pkg.go.dev/github.com/antoniodipinto/ikisocket#section-documentation)
+## 📖 ️ [Documentation](https://pkg.go.dev/github.com/sculas/ikisocket#section-documentation)
 
 ```go
 // Initialize new ikisocket in the callback this will
@@ -183,7 +183,7 @@ func (kws *Websocket) Close()
 ```
 ---
 
-## ⚡️ [Examples](https://github.com/antoniodipinto/ikisocket/tree/master/examples)
+## ⚡️ [Examples](https://github.com/sculas/ikisocket/tree/master/examples)
 
 
 

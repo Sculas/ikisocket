@@ -3,7 +3,7 @@ package ikisocket_custom_event_example
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/antoniodipinto/ikisocket"
+	"github.com/sculas/ikisocket"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/websocket/v2"
 	"log"
