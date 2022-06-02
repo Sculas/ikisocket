@@ -405,14 +405,19 @@ func Fire(event string, data []byte) {
 	fireGlobalEvent(event, data, nil)
 }
 
-// Emit Emit/Write the message into the given connection
+// Emit writes the message into the given connection
 func (kws *Websocket) Emit(message []byte) {
 	kws.write(TextMessage, message)
 }
 
-// Close Actively close the connection from the server
+// Close closes the connection from the server
 func (kws *Websocket) Close() {
-	kws.write(CloseMessage, []byte("Connection closed"))
+	kws.CloseWith([]byte("Connection closed"))
+}
+
+// CloseWith closes the connection from the server with a message
+func (kws *Websocket) CloseWith(message []byte) {
+	kws.write(CloseMessage, message)
 	kws.fireEvent(EventClose, nil, nil)
 }
 
@@ -445,7 +450,7 @@ func (kws *Websocket) pong(ctx context.Context) {
 	timeoutTicker := time.Tick(PongTimeout)
 	for {
 		select {
-		case <- timeoutTicker:
+		case <-timeoutTicker:
 			kws.write(PongMessage, []byte{})
 		case <-ctx.Done():
 			return
@@ -513,7 +518,7 @@ func (kws *Websocket) read(ctx context.Context) {
 	timeoutTicker := time.Tick(ReadTimeout)
 	for {
 		select {
-		case <- timeoutTicker:
+		case <-timeoutTicker:
 			if !kws.hasConn() {
 				continue
 			}
