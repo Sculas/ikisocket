@@ -352,7 +352,6 @@ func EmitToList(uuids []string, message []byte) {
 
 // EmitTo Emit to a specific socket connection
 func (kws *Websocket) EmitTo(uuid string, message []byte) error {
-
 	if !pool.contains(uuid) || !pool.get(uuid).IsAlive() {
 		kws.fireEvent(EventError, []byte(uuid), ErrorInvalidConnection)
 		return ErrorInvalidConnection
@@ -362,17 +361,28 @@ func (kws *Websocket) EmitTo(uuid string, message []byte) error {
 	return nil
 }
 
-// EmitTo Emit to a specific socket connection
+// EmitTo emits to a specific socket connection
 func EmitTo(uuid string, message []byte) error {
 	if !pool.contains(uuid) {
 		return ErrorInvalidConnection
 	}
-
-	if !pool.get(uuid).IsAlive() {
+	ws := pool.get(uuid)
+	if !ws.IsAlive() {
 		return ErrorInvalidConnection
 	}
-	pool.get(uuid).Emit(message)
+	ws.Emit(message)
 	return nil
+}
+
+func Get(uuid string) (*Websocket, error) {
+	if !pool.contains(uuid) {
+		return nil, ErrorInvalidConnection
+	}
+	ws := pool.get(uuid)
+	if !ws.IsAlive() {
+		return nil, ErrorInvalidConnection
+	}
+	return ws.(*Websocket), nil
 }
 
 // Broadcast to all the active connections
