@@ -3,6 +3,7 @@ package ikisocket
 import (
 	"context"
 	"errors"
+	"github.com/savsgio/gotils/strconv"
 	"math/rand"
 	"sync"
 	"time"
@@ -412,12 +413,12 @@ func (kws *Websocket) Emit(message []byte) {
 
 // Close closes the connection from the server
 func (kws *Websocket) Close() {
-	kws.CloseWith([]byte("Connection closed"))
+	kws.CloseWith([]byte("Connection closed"), websocket.CloseNormalClosure)
 }
 
 // CloseWith closes the connection from the server with a message
-func (kws *Websocket) CloseWith(message []byte) {
-	kws.write(CloseMessage, message)
+func (kws *Websocket) CloseWith(message []byte, closeCode int) {
+	kws.write(CloseMessage, websocket.FormatCloseMessage(closeCode, strconv.B2S(message)))
 	kws.fireEvent(EventClose, nil, nil)
 }
 
@@ -488,7 +489,7 @@ func (kws *Websocket) send(ctx context.Context) {
 			err := kws.ws.WriteMessage(message.mType, message.data)
 			kws.mu.RUnlock()
 
-			if err != nil {
+			if err != nil || message.mType == CloseMessage {
 				kws.disconnected(err)
 			}
 		case <-ctx.Done():
@@ -573,6 +574,10 @@ func (kws *Websocket) disconnected(err error) {
 
 	// Remove the socket from the pool
 	pool.delete(kws.UUID)
+
+	// There's a chance that the client is screwing with us,
+	// and doesn't close the connection. So we close it forcefully after.
+	_ = kws.ws.Close()
 }
 
 // Create random UUID for each connection
