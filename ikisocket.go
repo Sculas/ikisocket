@@ -572,12 +572,14 @@ func (kws *Websocket) disconnected(err error) {
 		kws.fireEvent(EventError, nil, err)
 	}
 
+	if kws.hasConn() {
+		// There's a chance that the client is screwing with us,
+		// and doesn't close the connection. So we close it forcefully after.
+		_ = kws.ws.Close()
+	}
+
 	// Remove the socket from the pool
 	pool.delete(kws.UUID)
-
-	// There's a chance that the client is screwing with us,
-	// and doesn't close the connection. So we close it forcefully after.
-	_ = kws.ws.Close()
 }
 
 // Create random UUID for each connection
